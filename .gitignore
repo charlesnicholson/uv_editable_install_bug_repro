@@ -1,5 +1,6 @@
 uv
 venv
+repro_p1/repro_p1/test2.py
 repro_p*/build
 **/*.egg-info
 **/__pycache__
