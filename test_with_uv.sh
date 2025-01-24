@@ -16,18 +16,18 @@ rm -rf $SCRIPT_DIR/repro_p2/repro_p2.egg-info
 rm -rf $SCRIPT_DIR/repro_p2/build
 rm -rf $SCRIPT_DIR/repro_p2/dist
 rm -rf $SCRIPT_DIR/repro_p2/__pycache__
-$UV cache clean
+$UV cache clean -q
 
 # Create the venv and editable-install the two repro packages:
 #
-$UV venv -p python3.13 $VENV
+$UV venv -p python3.13 $VENV -q
 
-$UV pip install \
+$UV pip install -q \
         -p $VENV/bin/python \
         -e $SCRIPT_DIR/repro_p1 \
         --config-settings editable_mode=strict
 
-$UV pip install \
+$UV pip install -q \
         -p $VENV/bin/python \
         -e $SCRIPT_DIR/repro_p2 \
         --config-settings editable_mode=strict
@@ -41,7 +41,7 @@ $VENV/bin/python -c "from repro_p2 import p2; p2.test_p2()"
 printf '%s\n' 'def test2_p1():' '    print("Hello from test2")' >> $SCRIPT_DIR/repro_p1/repro_p1/test2.py
 
 # This command should install a new test2.py symlink in repro_p1's build directory.
-$UV pip install \
+$UV pip install -q \
         -p $VENV/bin/python \
         -e $SCRIPT_DIR/repro_p1 \
         --config-settings editable_mode=strict

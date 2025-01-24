@@ -21,11 +21,11 @@ rm -rf $SCRIPT_DIR/repro_p2/__pycache__
 
 python3.13 -m venv $VENV
 
-$VENV_PY -m pip install \
+$VENV_PY -m pip install -q \
         -e $SCRIPT_DIR/repro_p1 \
         --config-settings editable_mode=strict
 
-$VENV_PY -m pip install \
+$VENV_PY -m pip install -q \
         -e $SCRIPT_DIR/repro_p2 \
         --config-settings editable_mode=strict
 
@@ -38,7 +38,7 @@ $VENV_PY -c "from repro_p2 import p2; p2.test_p2()"
 printf '%s\n' 'def test2_p1():' '    print("Hello from test2")' >> $SCRIPT_DIR/repro_p1/repro_p1/test2.py
 
 # This command should install a new test2.py symlink in repro_p1's build directory.
-$VENV_PY -m pip install -e $SCRIPT_DIR/repro_p1 --config-settings editable_mode=strict
+$VENV_PY -m pip install -q -e $SCRIPT_DIR/repro_p1 --config-settings editable_mode=strict
 
 # This command fails because uv didn't add a test2.py symlink to repro_p1's build dir.
 $VENV/bin/python -c "from repro_p2 import p2; p2.test_p2_against_changed_p1()"
