@@ -1,0 +1,5 @@
+uv
+venv
+repro_p*/build
+**/*.egg-info
+**/__pycache__
